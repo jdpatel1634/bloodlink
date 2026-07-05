@@ -54,6 +54,20 @@ class User extends Authenticatable
     ];
 
     /**
+     * Get all supported user roles.
+     *
+     * @return array<int, string>
+     */
+    public static function roles(): array
+    {
+        return [
+            self::ROLE_ADMIN,
+            self::ROLE_DONOR,
+            self::ROLE_PATIENT,
+        ];
+    }
+
+    /**
      * Check if the user has the given role.
      *
      * @param string $role
@@ -62,6 +76,16 @@ class User extends Authenticatable
     public function hasRole(string $role): bool
     {
         return $this->role === $role;
+    }
+
+    /**
+     * Get a readable display name for the user.
+     *
+     * @return string
+     */
+    public function displayName(): string
+    {
+        return $this->name ?: $this->email;
     }
 
     /**
@@ -102,6 +126,16 @@ class User extends Authenticatable
     public function isSuperAdmin(): bool
     {
         return (bool) $this->is_super_admin;
+    }
+
+    /**
+     * Check if the user can access staff-level features.
+     *
+     * @return bool
+     */
+    public function isStaffMember(): bool
+    {
+        return $this->isAdmin() || $this->isSuperAdmin();
     }
 
     /**
