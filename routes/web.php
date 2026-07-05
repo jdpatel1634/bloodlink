@@ -27,14 +27,12 @@ Route::middleware('auth')->prefix('profile')->name('profile.')->group(function (
     Route::delete('/', [ProfileController::class, 'destroy'])->name('destroy');
 });
 
-Route::controller(BloodRequestController::class)->prefix('request-blood')->name('blood.request.')->group(function () {
-    Route::get('/', 'showForm')->name('form');
-    Route::post('/', 'submitForm')->name('submit');
-});
+Route::post('/find-blood', [HomeController::class, 'handleSearch'])->name('blood.handleSearch');
 
-Route::controller(DonorRegistrationController::class)->prefix('register')->name('donor.register.')->group(function () {
-    Route::get('/donor', 'showRegistrationForm')->name('form');
-    Route::post('/donor', 'registerDonor')->name('submit');
-});
+Route::get('/request-blood', [App\Http\Controllers\BloodRequestController::class, 'showForm'])->name('blood.request.form');
+Route::post('/request-blood', [App\Http\Controllers\BloodRequestController::class, 'submitForm'])->name('blood.request.submit');
+
+Route::get('/register/donor', [App\Http\Controllers\DonorRegistrationController::class, 'showRegistrationForm'])->name('donor.register.form');
+Route::post('/register/donor', [App\Http\Controllers\DonorRegistrationController::class, 'registerDonor'])->name('donor.register.submit');
 
 require __DIR__ . '/auth.php';
