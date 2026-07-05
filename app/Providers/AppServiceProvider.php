@@ -20,25 +20,37 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      */
-    public function boot(): void
+   public function boot(): void
     {
-        $this->registerModelObservers();
-        $this->configureEloquentStrictMode();
+        $this->configureApplicationSecurity();
+        $this->configureModelBehaviour();
+        $this->registerObservers();
     }
 
-    /**
+   /**
      * Register model observers used by the application.
      */
-    private function registerModelObservers(): void
+    private function registerObservers(): void
     {
         SerologyTest::observe(SerologyTestObserver::class);
     }
 
     /**
-     * Enable stricter Eloquent behaviour outside production to catch mistakes early.
+     * Configure model behaviour for safer development.
      */
-    private function configureEloquentStrictMode(): void
+    private function configureModelBehaviour(): void
     {
         Model::preventLazyLoading(! $this->app->isProduction());
     }
+
+    /**
+     * Force HTTPS URLs when the application is running in production.
+     */
+    private function configureApplicationSecurity(): void
+    {
+        if ($this->app->isProduction()) {
+            URL::forceScheme('https');
+        }
+    }
 }
+
