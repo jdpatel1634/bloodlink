@@ -16,6 +16,8 @@ return new class extends Migration
             $table->unsignedBigInteger('state_id');
             $table->string('name');
             $table->timestamps();
+
+            $table->unique(['name', 'state_id']);
         });
     }
 
