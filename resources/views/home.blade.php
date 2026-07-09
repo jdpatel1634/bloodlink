@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blood Link - Blood Bank Management System</title>
+    <title>Life Saver - Blood Bank Management System</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
@@ -51,29 +51,13 @@
                     <span class="text-2xl font-bold text-gray-800">Life<span class="text-red-600">Saver</span></span>
                 </div>
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="/" class="text-gray-700 hover:text-red-600 font-medium transition focus-ring rounded">Home</a>
-                    <a href="/request-blood" class="text-gray-700 hover:text-red-600 font-medium transition focus-ring rounded">Request Blood</a>
-                    <a href="/register/donor" class="text-gray-700 hover:text-red-600 font-medium transition focus-ring rounded">Register as Donor</a>
-                    <a href="#upcoming-camps" class="text-gray-700 hover:text-red-600 font-medium transition focus-ring rounded">Donation Camps</a>
+                    <a href="/" class="text-gray-700 hover:text-red-600 font-medium transition">Home</a>
+                    <a href="/request-blood" class="text-gray-700 hover:text-red-600 font-medium transition">Request Blood</a>
+                    <a href="/register/donor" class="text-gray-700 hover:text-red-600 font-medium transition">Register as Donor</a>
                 </div>
                 <div class="flex items-center space-x-3">
-                    <button id="mobileMenuButton" type="button" class="md:hidden p-2 rounded-lg text-gray-700 hover:bg-red-50 focus-ring" aria-label="Open navigation menu" aria-expanded="false">
-                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                        </svg>
-                    </button>
-                    @if(auth()->check())
-                        @if(auth()->user()->isAdmin())
-                            <a href="/admin" class="px-5 py-2 text-red-600 font-semibold hover:bg-red-50 rounded-lg transition">Admin Dashboard</a>
-                        @elseif(auth()->user()->isDonor())
-                            <a href="/donor/dashboard" class="px-5 py-2 text-red-600 font-semibold hover:bg-red-50 rounded-lg transition">Donor Dashboard</a>
-                        @elseif(auth()->user()->isPatient())
-                            <a href="/patient" class="px-5 py-2 text-red-600 font-semibold hover:bg-red-50 rounded-lg transition">Patient Dashboard</a>
-                        @endif
-                    @else
-                        <a href="/login" class="px-5 py-2 text-red-600 font-semibold hover:bg-red-50 rounded-lg transition">Login</a>
-                        <a href="/request-blood" class="px-5 py-2 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition shadow-md">Register</a>
-                    @endif
+                    <a href="/login" class="px-5 py-2 text-red-600 font-semibold hover:bg-red-50 rounded-lg transition">Login</a>
+                    <a href="/request-blood" class="px-5 py-2 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition shadow-md">Register</a>
                 </div>
             </div>
         </div>
@@ -85,7 +69,7 @@
             <div class="grid md:grid-cols-2 gap-12 items-center">
                 <div class="space-y-6">
                     <div class="inline-block px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-sm font-medium">
-                           🩸 Saving Lives Together
+                        🩸 Saving Lives Together
                     </div>
                     <h1 class="text-5xl md:text-6xl font-bold leading-tight">
                         Every Drop <br/>
@@ -95,7 +79,7 @@
                         Join our mission to save lives through blood donation. Your single donation can save up to three lives.
                     </p>
                     <div class="flex flex-wrap gap-4 pt-4">
-                        <a href="{{ route('donor.register.form') }}" class="px-8 py-4 bg-red-800 text-white font-bold rounded-lg hover:bg-red-900 transition border-2 border-white/20">
+                        <a href="{{ route('donor.register') }}" class="px-8 py-4 bg-red-800 text-white font-bold rounded-lg hover:bg-red-900 transition border-2 border-white/20">
                             Become a Donor
                         </a>
                     </div>
@@ -117,7 +101,7 @@
                 <div class="hidden md:block">
                     <div class="relative">
                         <div class="absolute inset-0 bg-white/10 backdrop-blur-sm rounded-3xl transform rotate-6"></div>
-                        <div class="relative glass-panel backdrop-blur-md rounded-3xl p-8 space-y-4">
+                        <div class="relative bg-white/20 backdrop-blur-md rounded-3xl p-8 space-y-4">
                             <div class="grid grid-cols-4 gap-3">
                                 <div class="blood-type-badge text-center py-4 rounded-xl">
                                     <div class="text-2xl font-bold text-red-600">A+</div>
@@ -133,8 +117,8 @@
                                 </div>
                             </div>
                             <div class="bg-white rounded-xl p-6 space-y-3">
-                              <h3 class="text-gray-800 font-bold text-lg">Quick Blood Search</h3>
-                                <form action="{{ route('blood.handleSearch') }}" method="POST" class="space-y-2">
+                                <h3 class="text-gray-800 font-bold text-lg">Quick Blood Search</h3>
+                                <form action="{{ route('blood.search') }}" method="POST" class="space-y-2">
                                     @csrf
                                     <select name="blood_group_id" class="w-full px-4 py-3 text-gray-800 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-red-500" required>
                                         <option value="">Select Blood Type</option>
@@ -150,12 +134,11 @@
                                     <div class="mt-4 p-4 rounded-lg text-center {{ $availableUnitsCount > 0 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
                                         @if($availableUnitsCount > 0)
                                             <p class="font-semibold text-lg">{{ $availableUnitsCount }} units of {{ $searchedBloodGroup->group_name ?? 'selected blood group' }} available!</p>
-
                                             <p class="text-sm">Contact us for immediate transfusion.</p>
                                         @else
                                             <p class="font-semibold text-lg">No units of {{ $searchedBloodGroup->group_name ?? 'selected blood group' }} available.</p>
                                             <p class="text-sm">Consider submitting a blood request.</p>
-                                            <a href="{{ route('blood.request.form') }}" class="mt-2 inline-block text-blue-600 hover:text-blue-800 text-sm font-semibold">Submit Request</a>
+                                            <a href="{{ route('blood.request') }}" class="mt-2 inline-block text-blue-600 hover:text-blue-800 text-sm font-semibold">Submit Request</a>
                                         @endif
                                     </div>
                                 @endif
@@ -378,75 +361,6 @@
         </div>
     </section>
 
-    <!-- Upcoming Camps -->
-    <section id="upcoming-camps" class="py-16 bg-gray-50">
-           <section class="py-16 bg-gray-50">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-12">
-                <h2 class="text-4xl font-bold text-gray-800 mb-4">Upcoming Blood Donation Camps</h2>
-                <p class="text-gray-600 text-lg">Find a camp near you and schedule your donation</p>
-            </div>
-            @if($latestCamps->isEmpty())
-            <p class="text-center text-gray-600 text-lg">No upcoming camps found. Please check back later!</p>
-            @else
-                <div class="grid md:grid-cols-3 gap-8">
-                    @foreach ($latestCamps as $camp)
-                        <div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition card-hover border border-gray-100">
-                            <div class="bg-gradient-to-r from-red-600 to-red-700 p-6 text-white">
-                                <div class="flex items-center justify-between mb-2">
-                                    <span class="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-sm font-medium">Upcoming</span>
-                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                                    </svg>
-                                </div>
-                                <h3 class="text-2xl font-bold mb-1">{{ \Carbon\Carbon::parse($camp->camp_date)->format('M d, Y') }}</h3>
-                                <p class="text-red-100">{{ \Carbon\Carbon::parse($camp->start_time)->format('h:i A') }} - {{ \Carbon\Carbon::parse($camp->end_time)->format('h:i A') }}</p>
-                            </div>
-                            <div class="p-6">
-                                <h4 class="text-xl font-bold text-gray-800 mb-3">{{ $camp->name }}</h4>
-                                <div class="space-y-3 mb-6">
-                                    <div class="flex items-start space-x-3">
-                                        <svg class="w-5 h-5 text-red-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                        </svg>
-                                        <div>
-                                            <p class="text-gray-800 font-medium">{{ $camp->address }}, {{ $camp->city->name ?? '' }}, {{ $camp->state->name ?? '' }}</p>
-                                            <p class="text-gray-500 text-sm">{{ Str::limit($camp->description, 50) }}</p>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-start space-x-3">
-                                        <svg class="w-5 h-5 text-red-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
-                                        </svg>
-                                        <div>
-                                            <p class="text-gray-800 font-medium">{{ $camp->organizer }}</p>
-                                            <p class="text-gray-500 text-sm">Organizer</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="flex items-center justify-between pt-4 border-t border-gray-100">
-                                    <span class="text-sm text-gray-500">Available: {{ $camp->bloodUnits->where('status', 'ready_for_issue')->where('serology_test_status', 'passed')->count() }} units</span>
-                                    <a href="#" class="px-6 py-2 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition text-sm">
-                                        View Details
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            @endif
-            {{-- <div class="text-center mt-10">
-                <a href="#" class="inline-flex items-center space-x-2 text-red-600 font-semibold hover:text-red-700">
-                    <span>View All Camps</span>
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                    </svg>
-                </a>
-            </div> --}}
-        </div>
-    </section>
-
     <!-- CTA Section -->
     <section class="py-16 bg-gradient-to-br from-red-600 to-red-800 text-white">
         <div class="container mx-auto px-6 text-center">
@@ -455,7 +369,7 @@
                 Join thousands of donors who are making a difference. Your donation could be the gift of life for someone in need.
             </p>
             <div class="flex flex-wrap justify-center gap-4">
-                <a href="{{ route('donor.register.form') }}" class="px-8 py-4 bg-white text-red-600 font-bold rounded-lg hover:bg-gray-100 transition shadow-xl">
+                <a href="{{ route('donor.register') }}" class="px-8 py-4 bg-white text-red-600 font-bold rounded-lg hover:bg-gray-100 transition shadow-xl">
                     Register as Donor
                 </a>
                 <a href="/" class="px-8 py-4 bg-red-700 text-white font-bold rounded-lg hover:bg-red-800 transition border-2 border-white/30">
@@ -464,7 +378,6 @@
             </div>
         </div>
     </section>
-
 
     <!-- Footer -->
     <footer class="bg-gray-900 text-gray-300 py-12">
