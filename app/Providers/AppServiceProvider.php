@@ -4,8 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use App\Providers\Filament\AdminPanelProvider;
-use App\Models\SerologyTest;
-use App\Observers\SerologyTestObserver;
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -22,6 +21,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        SerologyTest::observe(SerologyTestObserver::class);
+        //
     }
 }
