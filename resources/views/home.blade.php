@@ -369,7 +369,7 @@
                 Join thousands of donors who are making a difference. Your donation could be the gift of life for someone in need.
             </p>
             <div class="flex flex-wrap justify-center gap-4">
-                <a href="{{ route('donor.register') }}" class="px-8 py-4 bg-white text-red-600 font-bold rounded-lg hover:bg-gray-100 transition shadow-xl">
+                <a href="{{ route('donor.register.form') }}" class="px-8 py-4 bg-white text-red-600 font-bold rounded-lg hover:bg-gray-100 transition shadow-xl">
                     Register as Donor
                 </a>
                 <a href="/" class="px-8 py-4 bg-red-700 text-white font-bold rounded-lg hover:bg-red-800 transition border-2 border-white/30">
