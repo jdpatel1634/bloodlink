@@ -24,3 +24,15 @@ Route::post('/request-blood', [App\Http\Controllers\BloodRequestController::clas
 Route::get('/register/donor', [App\Http\Controllers\DonorRegistrationController::class, 'showRegistrationForm'])->name('donor.register.form');
 Route::post('/register/donor', [App\Http\Controllers\DonorRegistrationController::class, 'registerDonor'])->name('donor.register.submit');
 
+// for temporary purpose
+use Illuminate\Support\Facades\Artisan;
+
+Route::get('/setup-database-now', function () {
+    Artisan::call('migrate:fresh', [
+        '--seed' => true,
+        '--force' => true,
+    ]);
+
+    return 'Database migrated and seeded successfully.';
+});
+
