@@ -48,14 +48,14 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    /**
+     /**
      * Check if the user has an 'admin' role.
      *
      * @return bool
      */
     public function isAdmin(): bool
     {
-        return $this->hasRole(self::ROLE_ADMIN);
+        return $this->role === 'admin';
     }
 
     /**
@@ -65,7 +65,7 @@ class User extends Authenticatable
      */
     public function isDonor(): bool
     {
-        return $this->hasRole(self::ROLE_DONOR);
+        return $this->role === 'donor';
     }
 
     /**
@@ -75,7 +75,7 @@ class User extends Authenticatable
      */
     public function isPatient(): bool
     {
-        return $this->hasRole(self::ROLE_PATIENT);
+        return $this->role === 'patient';
     }
 
     /**
@@ -85,7 +85,7 @@ class User extends Authenticatable
      */
     public function isSuperAdmin(): bool
     {
-        return (bool) $this->is_super_admin;
+        return $this->is_super_admin;
     }
 
     /**
