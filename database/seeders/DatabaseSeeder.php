@@ -269,6 +269,8 @@ class DatabaseSeeder extends Seeder
                 'name' => 'Admin',
                 'password' => Hash::make('asdfasdf'),
                 'email_verified_at' => now(),
+                'role' => 'admin',
+                'is_super_admin' => true,
             ]
         );
     }
