@@ -47,10 +47,10 @@ class StaffRelationManager extends RelationManager
             ])
             ->headerActions([
                 Tables\Actions\AttachAction::make()
+                    ->preloadRecordSelect()
                     ->form(fn (Tables\Actions\AttachAction $action): array => [
-                        $action->getForm()->schema([
+                        $action->getRecordSelect()
                             Select::make('recordId')
-                                ->options(\App\Models\User::pluck('name', 'id'))
                                 ->label('Staff Member')
                                 ->required()
                                 ->searchable()
