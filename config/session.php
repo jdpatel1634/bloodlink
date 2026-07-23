@@ -31,9 +31,10 @@ return [
     |
     */
 
-    'lifetime' => env('SESSION_LIFETIME', 180),
+    'lifetime' => env('SESSION_LIFETIME', 120),
 
     'expire_on_close' => false,
+
     /*
     |--------------------------------------------------------------------------
     | Session Encryption
@@ -112,7 +113,7 @@ return [
     |
     */
 
-    'lottery' => [env('SESSION_LOTTERY_CHANCE', 2), env('SESSION_LOTTERY_TOTAL', 100)],
+    'lottery' => [2, 100],
 
     /*
     |--------------------------------------------------------------------------
