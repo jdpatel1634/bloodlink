@@ -47,10 +47,10 @@ class StaffRelationManager extends RelationManager
             ])
             ->headerActions([
                 Tables\Actions\AttachAction::make()
-                    ->preloadRecordSelect()
                     ->form(fn (Tables\Actions\AttachAction $action): array => [
-                        $action->getRecordSelect()
+                        $action->getForm()->schema([
                             Select::make('recordId')
+                                ->options(\App\Models\User::pluck('name', 'id'))
                                 ->label('Staff Member')
                                 ->required()
                                 ->searchable()
@@ -60,8 +60,8 @@ class StaffRelationManager extends RelationManager
                                 ->maxLength(255)
                                 ->label('Role in Camp'),
                         ])
-                    ])
-            
+                    ]),
+            ])
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DetachAction::make(),
