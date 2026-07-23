@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Laravel\Sanctum\Sanctum;
 use Illuminate\Support\ServiceProvider;
 use App\Providers\Filament\AdminPanelProvider;
 use App\Models\SerologyTest;
